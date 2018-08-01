@@ -1,5 +1,5 @@
 {
-  "main": "dist/main.js",
+  "main": "src/main.ts",
   "name": "vue-reports-chart",
   "version": "0.0.1",
   "author": "dvanovikov@synergy.ru",
@@ -23,10 +23,11 @@
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-plugin-typescript": "^3.0.0-beta.15",
     "@vue/cli-service": "^3.0.0-beta.15",
+    "dts-bundle-generator": "^1.6.1",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.16",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "vue-template-compiler": "^2.5.16"
   },
   "scripts": {
     "build": "vue-cli-service build",
