@@ -1,6 +1,6 @@
 {
   "main": "dist/main.js",
-  "name": "@ticketbox/vue-reports-chart",
+  "name": "vue-reports-chart",
   "version": "0.0.1",
   "author": "dvanovikov@synergy.ru",
   "license": "ISC",
