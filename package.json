@@ -1,0 +1,44 @@
+{
+  "main": "dist/main.js",
+  "name": "@ticketbox/vue-reports-chart",
+  "version": "0.0.1",
+  "author": "dvanovikov@synergy.ru",
+  "license": "ISC",
+  "deprecated": false,
+  "private": false,
+  "bundleDependencies": false,
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "dependencies": {
+    "chart": "^0.1.2",
+    "chart.js": "^2.7.2",
+    "vue": "^2.5.16",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^6.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0-beta.15",
+    "@vue/cli-plugin-typescript": "^3.0.0-beta.15",
+    "@vue/cli-service": "^3.0.0-beta.15",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "vue-template-compiler": "^2.5.16",
+    "typescript": "^2.9.2"
+  },
+  "scripts": {
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "serve": "vue-cli-service serve",
+    "prepublish": "vue-cli-service build"
+  },
+  "publishConfig": {
+    "registry": "https://repository.synergy.ru/repository/npm-private/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@lab.syndev.ru:npm/server-validator.git"
+  }
+}
