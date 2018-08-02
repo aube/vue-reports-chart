@@ -8,6 +8,7 @@ __*
 *.backup
 *.map
 *.d.ts
+src/**/*.js
 dist/
 dist/*/**
 node_modules

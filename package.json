@@ -30,10 +30,12 @@
     "vue-template-compiler": "^2.5.16"
   },
   "scripts": {
-    "build": "vue-cli-service build",
+    "build2": "npm run tsc",
+    "tsc": "tsc",
     "lint": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
-    "prepublish": "vue-cli-service build"
+    "prepublish": "vue-cli-service build",
+    "build": "vue-cli-service build"
   },
   "publishConfig": {
     "registry": "https://repository.synergy.ru/repository/npm-private/"
