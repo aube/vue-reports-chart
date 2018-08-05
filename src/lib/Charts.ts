@@ -113,9 +113,10 @@ export default class Charts extends Vue {
 
         if ( activePoints.length > 0) {
             const clickedElementIndex = activePoints[0]._index;
+            const clickedDatasetIndex = activePoints[0]._datasetIndex;
             const label = this.chart.data.labels[clickedElementIndex];
-            const value = this.chart.data.datasets[0].data[clickedElementIndex];
-            this.$emit('onClickByPoint', clickedElementIndex);
+            const value = this.chart.data.datasets[clickedDatasetIndex].data[clickedElementIndex];
+            this.$emit('onClickByPoint', clickedElementIndex, clickedDatasetIndex);
         }
     }
 
