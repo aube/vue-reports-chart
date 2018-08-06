@@ -1,9 +1,5 @@
 <template>
-    <div class="chart-container"
-        @-#@!-mousewheel.prevent="onScroll">
-        <canvas width=100 height=10 ref="canvas"
-            @click="onClick"></canvas>
-    </div>
+    <canvas ref="canvas" @click="onClick"></canvas>
 </template>
 
 <script lang="ts">
@@ -25,10 +21,9 @@ export default class Chart extends Charts {
 
     @Prop() width!: string;
     @Prop() height!: string;
-    @Prop() data!: IDataChart[];
     @Prop() xAxisColumn!: string;
-    @Prop() columns!: IColumn[];
     @Prop() yAxisHide!: string;
+    @Prop() columns!: IColumn[];
     @Prop() type!: string;
 
     @Watch('columns', { immediate: true, deep: false })
@@ -76,6 +71,7 @@ export default class Chart extends Charts {
         let labelsX: string[] = [];
         let iMax = Math.min(this.data.length, this.valuesAmount + this.position);
         iMax = Math.max(0, this.data.length);
+        console.log('iMax', iMax);
 
         for (let i = this.position; i < iMax; ++i) {
             labelsX.push(this.data[i].labelX.split('-').splice(-1)[0]);

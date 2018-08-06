@@ -2,7 +2,7 @@ import {Component, Prop, Watch, Vue} from 'vue-property-decorator';
 // @ts-ignore
 import ChartJS from 'chart.js';
 
-import {IDataChart, IChartDataset, IColumn} from './Types';
+import {IDataChart, IChartDataset, IColumn, IChartFilter} from './Types';
 
 
 @Component({})
@@ -29,6 +29,7 @@ export default class Charts extends Vue {
     @Prop() width!: string;
     @Prop() height!: string;
     @Prop() data!: IDataChart[];
+    @Prop() filters!: IDataChart[];
     @Prop() legendPosition!: string;
     @Prop() yAxisHide!: string;
     @Prop() columns!: IColumn[];
@@ -38,6 +39,14 @@ export default class Charts extends Vue {
         if (oldVal) {
             this.chart.options.animation.duration = 1000;
             this.position = 0;
+            this.update();
+        }
+    }
+    @Watch('filters', { immediate: true, deep: true })
+    onDataChanged(val: any, oldVal: any) {
+        if (oldVal) {
+            this.chart.options.animation.duration = 0;
+            // this.position = 0;
             this.update();
         }
     }
@@ -107,6 +116,15 @@ export default class Charts extends Vue {
             .rgbString();
     }
 
+    filterIsSelected(id: string, label: string): boolean {
+        for (let filter of this.filters) {
+            if (filter.id === id && ~filter.values.indexOf(label)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     onClick(e: any) {
         let activePoints = this.chart.getElementsAtEvent && this.chart.getElementsAtEvent(e);
         activePoints = this.chart.getSegmentsAtEvent && this.chart.getSegmentsAtEvent(e) || activePoints;
@@ -116,7 +134,15 @@ export default class Charts extends Vue {
             const clickedDatasetIndex = activePoints[0]._datasetIndex;
             const label = this.chart.data.labels[clickedElementIndex];
             const value = this.chart.data.datasets[clickedDatasetIndex].data[clickedElementIndex];
-            this.$emit('onClickByPoint', clickedElementIndex, clickedDatasetIndex);
+            this.$emit('onClickByPoint', {
+                clickedElementIndex,
+                clickedDatasetIndex,
+                label,
+                value,
+                data: this.type === 'pie'
+                    ? this.data[clickedDatasetIndex].data[clickedElementIndex]
+                    : this.data[clickedElementIndex]
+            });
         }
     }
 
@@ -133,8 +159,8 @@ export default class Charts extends Vue {
         // a little strange calculate canvas sizes:
         // "width" is 100% always,
         // and then height is set proportional by new width
-        canvas.setAttribute('width', this.width || '100');
-        canvas.setAttribute('height', this.height || '55');
+        canvas.setAttribute('width', canvas.parentNode.offsetWidth);
+        canvas.setAttribute('height', canvas.parentNode.offsetHeight);
 
         return new ChartJS(canvas, options);
     }

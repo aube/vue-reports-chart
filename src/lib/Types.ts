@@ -27,12 +27,7 @@ export interface IReportRow {
 }
 
 export interface IChartFilter {
-    data: number[];
-    labels: string[];
-    label: string;
-}
-export interface IChartFilters {
-    [key: string]: IChartFilter[];
+    [key: string]: string[];
 }
 
 /**

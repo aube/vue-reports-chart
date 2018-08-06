@@ -1,24 +1,5 @@
 <template>
-    <div class="chart-container row"
-        @-#@!-mousewheel.prevent="onScroll">
-        <div class="col-6">
-            <canvas :width='width' :height='height' ref="canvas"
-                @click="onClick"></canvas>
-        </div>
-
-
-        <div class="col-6">
-            <p class="m-1" v-for="(amount, label) in getLegend">
-                <span>
-                    {{label}}
-                </span> - 
-                <strong>
-                    {{amount}}
-                </strong>
-            </p>
-        </div>
-
-    </div>
+    <canvas ref="canvas" @click="onClick"></canvas>
 </template>
 
 <script lang="ts">
@@ -32,6 +13,7 @@ import {IRawData, IChartPieDataset, IColumn, IDataChart} from '../lib/Types';
 
 @Component({})
 export default class ChartPie extends Charts {
+    type = 'pie';
     position = 0;
     valuesAmount = 0;
     chart: any;
@@ -53,7 +35,6 @@ export default class ChartPie extends Charts {
 
     @Prop() width!: string;
     @Prop() height!: string;
-    @Prop() data!: IDataChart[];
     @Prop() legendPosition!: string;
 
 
@@ -88,14 +69,28 @@ export default class ChartPie extends Charts {
         let datasets: IChartPieDataset[] = [];
         let i = 0;
 
+        // тут сделано под несколько наборов данных, но клик, наведение и фильтрацию нужно доделывать,
+        // т.к. из коробки они работают неправильно, поэтому лучше ограничиться одним набором
         this.data.forEach((ds: any) => {
             let dataset: IChartPieDataset = Object.assign({}, ds);
-
             dataset.label = ds.label;
             dataset.data = ds.data;
-            dataset.backgroundColor = this.getColors(i, ds.data.length, ds.opacity || this.opacity);
-            dataset.hoverBackgroundColor = this.getColors(i, ds.data.length, ds.opacity || this.opacity);
-            i += ds.data.length;
+
+            dataset.borderWidth = [];
+            dataset.borderColor = [];
+            dataset.backgroundColor = [];
+            dataset.hoverBackgroundColor = [];
+            ds.labels.forEach((label) => {
+                let opacity = ds.opacity || this.opacity;
+                let borderColor = this.getColor('#ffffff', opacity);
+                if (this.filterIsSelected(ds.id, label)) {
+                    opacity = 1;
+                    borderColor = this.getColor('tomato', opacity);
+                }
+                dataset.backgroundColor.push(this.getColor(i, opacity));
+                dataset.hoverBackgroundColor.push(this.getColor(i++, opacity * 2));
+                dataset.borderColor.push(borderColor);
+            });
 
             datasets.push(dataset);
         });
@@ -103,16 +98,17 @@ export default class ChartPie extends Charts {
         return datasets;
     }
 
-    mounted(): void {
 
+    mounted(): void {
         const options = {
-            type: 'pie',
+            type: this.type,
             data: {
                 labels: this.getLabels,
                 datasets: []
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 legend: {
                     position: this.legendPosition || 'right',
                 },
@@ -144,15 +140,4 @@ export default class ChartPie extends Charts {
 </script>
 
 <style scoped lang="scss">
-.chart-container {
-    width: 100%;
-    &:hover {
-        background-color: #fafafa;
-    }
-    canvas {
-        // width: 100%;
-        // width: 40px;
-        // height: 40px;
-    }
-}
 </style>
