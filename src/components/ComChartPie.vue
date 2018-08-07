@@ -13,7 +13,6 @@ import {IRawData, IChartPieDataset, IColumn, IDataChart} from '../lib/Types';
 
 @Component({})
 export default class ChartPie extends Charts {
-    type = 'pie';
     position = 0;
     valuesAmount = 0;
     chart: any;
