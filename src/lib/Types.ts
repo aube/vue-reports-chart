@@ -57,6 +57,7 @@ export interface IChartPieDataset {
     label: string;
     data: number[];
     backgroundColor: string[];
+    borderColor: string[];
     hoverBorderColor: string[];
     hoverBackgroundColor: string[];
     // [key: string]: any; // string | number;

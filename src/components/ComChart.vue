@@ -24,12 +24,10 @@ export default class Chart extends Charts {
     @Prop() xAxisColumn!: string;
     @Prop() yAxisHide!: string;
     @Prop() columns!: IColumn[];
-    @Prop() type!: string;
 
     @Watch('columns', { immediate: true, deep: false })
     onOptionsChanged(val: any, oldVal: any) {
         if (oldVal) {
-            console.log('this.chart', this.chart);
             this.chart.options.animation.duration = 1000;
             this.chart.data.datasets = this.getDatasets();
             this.update();
@@ -71,7 +69,6 @@ export default class Chart extends Charts {
         let labelsX: string[] = [];
         let iMax = Math.min(this.data.length, this.valuesAmount + this.position);
         iMax = Math.max(0, this.data.length);
-        console.log('iMax', iMax);
 
         for (let i = this.position; i < iMax; ++i) {
             labelsX.push(this.data[i].labelX.split('-').splice(-1)[0]);

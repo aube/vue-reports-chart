@@ -76,11 +76,10 @@ export default class ChartPie extends Charts {
             dataset.label = ds.label;
             dataset.data = ds.data;
 
-            dataset.borderWidth = [];
             dataset.borderColor = [];
             dataset.backgroundColor = [];
             dataset.hoverBackgroundColor = [];
-            ds.labels.forEach((label) => {
+            ds.labels.forEach((label: string) => {
                 let opacity = ds.opacity || this.opacity;
                 let borderColor = this.getColor('#ffffff', opacity);
                 if (this.filterIsSelected(ds.id, label)) {

@@ -34,7 +34,6 @@
     "tsc": "tsc",
     "lint": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
-    "prepublish": "vue-cli-service build",
     "build": "vue-cli-service build"
   },
   "publishConfig": {

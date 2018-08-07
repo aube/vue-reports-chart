@@ -33,8 +33,10 @@ export default class Charts extends Vue {
     @Prop() legendPosition!: string;
     @Prop() yAxisHide!: string;
     @Prop() columns!: IColumn[];
+    @Prop() type!: string;
 
     @Watch('data', { immediate: true, deep: true })
+    // @ts-ignore
     onDataChanged(val: any, oldVal: any) {
         if (oldVal) {
             this.chart.options.animation.duration = 1000;
@@ -43,10 +45,10 @@ export default class Charts extends Vue {
         }
     }
     @Watch('filters', { immediate: true, deep: true })
+    // @ts-ignore
     onDataChanged(val: any, oldVal: any) {
         if (oldVal) {
             this.chart.options.animation.duration = 0;
-            // this.position = 0;
             this.update();
         }
     }
